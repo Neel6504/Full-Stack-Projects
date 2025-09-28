@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧮 Kids Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .calculator-container {
+            background: white;
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 4px solid #ff6b6b;
+        }
+
+        .calculator-title {
+            font-size: 2.5rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .calculator-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-label {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+
+        .number-input {
+            padding: 1rem;
+            font-size: 1.5rem;
+            border: 3px solid #4ecdc4;
+            border-radius: 15px;
+            width: 200px;
+            text-align: center;
+            font-family: 'Comic Sans MS', cursive;
+            background: #f0f8ff;
+        }
+
+        .number-input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .operation-group {
+            margin: 1rem 0;
+        }
+
+        .operation-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .operation-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .operation-button input[type="radio"] {
+            display: none;
+        }
+
+        .operation-button label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: #e8f5e8;
+            border: 3px solid #4ecdc4;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            transition: all 0.3s;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .operation-button input[type="radio"]:checked + label {
+            background: #4ecdc4;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .operation-button label:hover {
+            background: #a8e6cf;
+            transform: translateY(-2px);
+        }
+
+        .calculate-button {
+            padding: 1.2rem 2rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Comic Sans MS', cursive;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .calculate-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 15px;
+            font-size: 1.2rem;
+        }
+
+        .result-success {
+            background: linear-gradient(135deg, #a8e6cf, #88d8a3);
+            color: #2d5016;
+            border: 3px solid #4ecdc4;
+        }
+
+        .result-error {
+            background: linear-gradient(135deg, #ffcccb, #ffb3ba);
+            color: #8b0000;
+            border: 3px solid #ff6b6b;
+        }
+
+        .result-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .fun-emojis {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        .reset-button {
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: #95a5a6;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        .reset-button:hover {
+            background: #7f8c8d;
+        }
+
+        @media (max-width: 600px) {
+            .calculator-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .calculator-title {
+                font-size: 2rem;
+            }
+
+            .operation-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .number-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <h1 class="calculator-title">🧮 Kids Calculator</h1>
+        <p class="calculator-subtitle">Let's do some math together! 🌟</p>
+
+        <form action="/calculate" method="POST" class="calculator-form">
+            <div class="input-group">
+                <label class="input-label" for="num1">First Number 🔢</label>
+                <input 
+                    type="text" 
+                    id="num1" 
+                    name="num1" 
+                    class="number-input" 
+                    placeholder="Enter first number"
+                    value="<%= num1 %>"
+                    required
+                >
+            </div>
+
+            <div class="operation-group">
+                <label class="input-label">Choose Operation 🎯</label>
+                <div class="operation-buttons">
+                    <div class="operation-button">
+                        <input type="radio" id="add" name="operation" value="add" <%= operation === 'add' ? 'checked' : '' %>>
+                        <label for="add">➕ Add</label>
+                    </div>
+                    <div class="operation-button">
+                        <input type="radio" id="subtract" name="operation" value="subtract" <%= operation === 'subtract' ? 'checked' : '' %>>
+                        <label for="subtract">➖ Subtract</label>
+                    </div>
+                    <div class="operation-button">
+                        <input type="radio" id="multiply" name="operation" value="multiply" <%= operation === 'multiply' ? 'checked' : '' %>>
+                        <label for="multiply">✖️ Multiply</label>
+                    </div>
+                    <div class="operation-button">
+                        <input type="radio" id="divide" name="operation" value="divide" <%= operation === 'divide' ? 'checked' : '' %>>
+                        <label for="divide">➗ Divide</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="num2">Second Number 🔢</label>
+                <input 
+                    type="text" 
+                    id="num2" 
+                    name="num2" 
+                    class="number-input" 
+                    placeholder="Enter second number"
+                    value="<%= num2 %>"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="calculate-button">
+                🚀 Calculate!
+            </button>
+        </form>
+
+        <% if (result !== null || error) { %>
+            <div class="result-section <%= error ? 'result-error' : 'result-success' %>">
+                <% if (error) { %>
+                    <div class="fun-emojis">😅 Oops!</div>
+                    <div><strong>Error:</strong> <%= error %></div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem;">💡 Tip: Make sure to enter only numbers!</div>
+                <% } else { %>
+                    <div class="fun-emojis">🎉 Great job!</div>
+                    <div><strong>Result:</strong></div>
+                    <div class="result-number"><%= result %></div>
+                    <div style="font-size: 0.9rem; margin-top: 0.5rem;">
+                        <%= num1 %> <%= operation === 'add' ? '+' : operation === 'subtract' ? '-' : operation === 'multiply' ? '×' : '÷' %> <%= num2 %> = <%= result %>
+                    </div>
+                <% } %>
+                
+                <a href="/">
+                    <button type="button" class="reset-button">
+                        🔄 New Calculation
+                    </button>
+                </a>
+            </div>
+        <% } %>
+    </div>
+
+    <script>
+        // Add some fun interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.number-input');
+            
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    // Remove any non-numeric characters except decimal point and minus
+                    this.value = this.value.replace(/[^0-9.-]/g, '');
+                    
+                    // Ensure only one decimal point
+                    const parts = this.value.split('.');
+                    if (parts.length > 2) {
+                        this.value = parts[0] + '.' + parts.slice(1).join('');
+                    }
+                    
+                    // Ensure minus only at the beginning
+                    if (this.value.indexOf('-') > 0) {
+                        this.value = this.value.replace(/-/g, '');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
